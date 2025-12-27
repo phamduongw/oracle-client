@@ -1,0 +1,63 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: gdd-stress-seq
+spec:
+  parallelism: 3
+  completions: 3
+  backoffLimit: 0
+  ttlSecondsAfterFinished: 300
+  template:
+    metadata:
+      labels:
+        app: gdd-stress
+        mode: seq
+    spec:
+      restartPolicy: Never
+      hostAliases:
+        - ip: "172.31.1.19"
+          hostnames:
+            - "ctldb.sub07270934470.bnhprodvcn.oraclevcn.com"
+            - "ctldb"
+        - ip: "172.31.1.6"
+          hostnames:
+            - "vtt01.sub07270934470.bnhprodvcn.oraclevcn.com"
+            - "vtt01"
+        - ip: "172.31.1.14"
+          hostnames:
+            - "vtt02.sub07270934470.bnhprodvcn.oraclevcn.com"
+            - "vtt02"
+        - ip: "172.31.1.3"
+          hostnames:
+            - "vtt03.sub07270934470.bnhprodvcn.oraclevcn.com"
+            - "vtt03"
+      topologySpreadConstraints:
+        - maxSkew: 1
+          topologyKey: kubernetes.io/hostname
+          whenUnsatisfiable: DoNotSchedule
+          labelSelector:
+            matchLabels:
+              app: gdd-stress
+              mode: seq
+      containers:
+        - name: runner
+          image: docker.io/phamduongw/gdd-stress:1.0.0
+          imagePullPolicy: Always
+          args: ["--seq"]
+          envFrom:
+            - configMapRef:
+                name: gdd-stress-env
+            - secretRef:
+                name: gdd-stress-secret
+          env:
+            - name: THREADS
+              value: "16"
+            - name: DURATION
+              value: "300"
+          resources:
+            requests:
+              cpu: "16"
+              memory: "2Gi"
+            limits:
+              cpu: "16"
+              memory: "4Gi"
