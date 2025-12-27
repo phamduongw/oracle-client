@@ -1,37 +1,19 @@
 package vn.bnh;
 
-public class Main {
+public final class Main {
+
+    private Main() {
+    }
+
     public static void main(String[] args) {
-        if (args.length != 1) {
-            usage();
+        if (args.length == 0 || "--uuid".equals(args[0])) {
+            DataGeneratorUuid.run();
             return;
         }
-
-        switch (args[0]) {
-            case "--read":
-                read();
-                break;
-            case "--write":
-                write();
-                break;
-            default:
-                usage();
+        if ("--seq".equals(args[0])) {
+            DataGeneratorSeq.run();
+            return;
         }
-    }
-
-    private static void read() {
-        System.out.println("MODE=READ");
-        DataValidator.run();
-    }
-
-    private static void write() {
-        System.out.println("MODE=WRITE");
-        DataGenerator.run();
-    }
-
-    private static void usage() {
-        System.out.println("Usage:");
-        System.out.println("  java -jar vn.bnh.gdd-1.0.0.jar --read");
-        System.out.println("  java -jar vn.bnh.gdd-1.0.0.jar --write");
+        throw new IllegalArgumentException("Usage: --uuid | --seq");
     }
 }

@@ -41,6 +41,13 @@
             <artifactId>ons</artifactId>
             <version>23.26.0.0.0</version>
         </dependency>
+
+        <!-- https://mvnrepository.com/artifact/com.fasterxml.uuid/java-uuid-generator -->
+        <dependency>
+            <groupId>com.fasterxml.uuid</groupId>
+            <artifactId>java-uuid-generator</artifactId>
+            <version>5.2.0</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -74,6 +81,7 @@
                                         <excludes>
                                             <exclude>META-INF/MANIFEST.MF</exclude>
                                             <exclude>META-INF/license.txt</exclude>
+                                            <exclude>module-info.class</exclude>
                                         </excludes>
                                     </filter>
                                 </filters>
