@@ -3,8 +3,8 @@ kind: Job
 metadata:
   name: gdd-stress-uuid
 spec:
-  parallelism: 3
-  completions: 3
+  parallelism: 1
+  completions: 1
   backoffLimit: 0
   ttlSecondsAfterFinished: 300
   template:
@@ -51,13 +51,13 @@ spec:
                 name: gdd-stress-secret
           env:
             - name: THREADS
-              value: "16"
+              value: "1"
             - name: DURATION
               value: "300"
           resources:
             requests:
-              cpu: "16"
+              cpu: "4"
               memory: "2Gi"
             limits:
-              cpu: "16"
+              cpu: "4"
               memory: "4Gi"
