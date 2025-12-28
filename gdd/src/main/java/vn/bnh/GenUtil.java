@@ -39,7 +39,7 @@ final class GenUtil {
     static PoolDataSource pool(String urlEnvKey, int threads) throws Exception {
         PoolDataSource pds = PoolDataSourceFactory.getPoolDataSource();
         pds.setConnectionPoolName("POOL_" + urlEnvKey);
-        pds.setFastConnectionFailoverEnabled(false);
+        pds.setFastConnectionFailoverEnabled(true);
         pds.setConnectionFactoryClassName("oracle.jdbc.pool.OracleDataSource");
         pds.setURL(env(urlEnvKey));
         pds.setUser(env("GDD_USERNAME"));
