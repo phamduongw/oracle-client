@@ -12,7 +12,7 @@ import java.util.logging.Logger;
 public final class DataGeneratorSeq {
 
     private static final Logger LOGGER = Logger.getLogger(DataGeneratorSeq.class.getName());
-    private static final String NEXTVAL_SQL = "SELECT DATA_SUBCRIBER_SEQ.NEXTVAL FROM DUAL";
+    private static final String NEXTVAL_SQL = "SELECT DATA_SUBCRIBER_ID_SEQ.NEXTVAL FROM DUAL";
 
     private DataGeneratorSeq() {
     }
