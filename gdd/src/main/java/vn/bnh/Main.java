@@ -7,28 +7,25 @@ public final class Main {
 
     public static void main(String[] args) {
         if (args.length == 0) {
-            throw new IllegalArgumentException("Usage: --sequence | --snowflake | --uuid | --procedure | --query \"...\" --sharding-key \"...\"");
+            throw new IllegalArgumentException("Usage: --sequence | --snowflake | --procedure | --query \"...\" --sharding-key \"...\"");
         }
 
         switch (args[0]) {
             case "--sequence":
-                DataGeneratorSequence.run();
+                SequenceCustomerGenerator.run();
                 return;
             case "--snowflake":
-                DataGeneratorSnowflake.run();
-                return;
-            case "--uuid":
-                DataGeneratorUuid.run();
+                SnowflakeCustomerGenerator.run();
                 return;
             case "--procedure":
-                DataGeneratorProcedure.run();
+                ProcedureBatchCustomerGenerator.run();
                 return;
             default:
                 break;
         }
 
         try {
-            DataChecker.run(args);
+            ShardQueryRunner.run(args);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
