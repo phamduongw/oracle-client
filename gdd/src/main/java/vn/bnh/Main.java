@@ -6,14 +6,31 @@ public final class Main {
     }
 
     public static void main(String[] args) {
-        if (args.length == 0 || "--uuid".equals(args[0])) {
-            DataGeneratorUuid.run();
-            return;
+        if (args.length == 0) {
+            throw new IllegalArgumentException("Usage: --sequence | --snowflake | --uuid | --procedure | --query \"...\" --sharding-key \"...\"");
         }
-        if ("--seq".equals(args[0])) {
-            DataGeneratorSeq.run();
-            return;
+
+        switch (args[0]) {
+            case "--sequence":
+                DataGeneratorSequence.run();
+                return;
+            case "--snowflake":
+                DataGeneratorSnowflake.run();
+                return;
+            case "--uuid":
+                DataGeneratorUuid.run();
+                return;
+            case "--procedure":
+                DataGeneratorProcedure.run();
+                return;
+            default:
+                break;
         }
-        throw new IllegalArgumentException("Usage: --uuid | --seq");
+
+        try {
+            DataChecker.run(args);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 }

@@ -27,19 +27,23 @@ public final class DataGeneratorUuid {
 
     public static void run() {
         try {
-            int threads = Integer.parseInt(GenUtil.env("THREADS"));
-            long duration = Long.parseLong(GenUtil.env("DURATION"));
-            PoolDataSource gds = GenUtil.pool("GDS_UUID_URL", threads);
+            int threads = Integer.parseInt(DataUtil.env("THREADS"));
+            long duration = Long.parseLong(DataUtil.env("DURATION"));
 
-            GenUtil.runLoop(threads, duration, () -> {
+            LOGGER.log(Level.INFO, "START mode=uuid threads={0} duration_s={1}", new Object[]{threads, duration});
+
+            PoolDataSource gds = DataUtil.pool("GDS_UUID_URL", threads);
+
+            DataUtil.runLoop(threads, duration, () -> {
                 try {
-                    GenUtil.insertUuid(gds, raw16());
+                    DataUtil.insertSubscriberByUuid(gds, raw16());
                 } catch (Exception e) {
-                    GenUtil.ERR.incrementAndGet();
-                    LOGGER.log(Level.SEVERE, "STOP mode=uuid step=insert", e);
+                    LOGGER.log(Level.SEVERE, "STOP mode=uuid", e);
                     System.exit(1);
                 }
-            }, "uuid");
+            });
+
+            LOGGER.log(Level.INFO, "END mode=uuid");
         } catch (Exception e) {
             LOGGER.log(Level.SEVERE, "FATAL mode=uuid", e);
             System.exit(1);

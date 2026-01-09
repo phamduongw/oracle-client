@@ -4,7 +4,7 @@
     <parent>
         <groupId>vn.bnh</groupId>
         <artifactId>oracle-client</artifactId>
-        <version>1.0.0</version>
+        <version>1.0.5</version>
     </parent>
 
     <artifactId>rac</artifactId>
